@@ -1,0 +1,41 @@
+import random
+
+class Loto:
+    def __init__(self):
+        self.numbers = set()
+        self.generate_numbers()
+
+    def generate_numbers(self):
+        while len(self.numbers) < 6:
+            self.numbers.add(random.randint(1, 49))
+
+    def get_user_numbers(self):
+        user_numbers = set()
+        print("Loto kartınızı oluşturun:")
+        while len(user_numbers) < 6:
+            try:
+                num = int(input("Lütfen 1 ile 49 arasında bir sayı girin: "))
+                if num < 1 or num > 49:
+                    print("Geçersiz sayı. Tekrar deneyin.")
+                elif num in user_numbers:
+                    print("Bu sayıyı zaten seçtiniz. Başka bir sayı seçin.")
+                else:
+                    user_numbers.add(num)
+            except ValueError:
+                print("Geçersiz giriş. Bir tam sayı girin.")
+        return user_numbers
+
+    def play(self):
+        user_numbers = self.get_user_numbers()
+        print("Loto numaraları çekiliyor...")
+        print("Kazanan numaralar:", sorted(self.numbers))
+        matching_numbers = user_numbers.intersection(self.numbers)
+        print("Eşleşen numaralar:", sorted(matching_numbers))
+        if matching_numbers:
+            print("Tebrikler! {} numarayı tutturdunuz.".format(len(matching_numbers)))
+        else:
+            print("Maalesef hiçbir numarayı tutturamadınız.")
+
+if __name__ == "__main__":
+    loto_game = Loto()
+    loto_game.play()
